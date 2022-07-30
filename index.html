@@ -5,6 +5,15 @@
   <title>Page Title</title>
 </head>
 <body>
+    <div id = "container">
+        <button class="Rock">Rock</button>
+        <button class="Paper">Paper</button>
+        <button class="Scissors">Scissors</button>
+        <div id = "scores"></div>
+        <div id = "winner"></div>
+    </div>
+
+    
   <script>
     function getComputerChoice() {
         let choice = Math.random();
@@ -18,14 +27,13 @@
         }
     }
 
-    function playerSelection() {
-        let choice = prompt('Choose Rock, paper, or Scissors', 'Rock');
-        return choice; 
-    }
+    let computerScore = 0;
+    let playerScore = 0;
 
-    function playRound(playerSelection, computerSelection) {
-        playerSelection = playerSelection.toLowerCase();
-        computerSelection = computerSelection.toLowerCase();
+    function playRound(e) {
+        computerSelection = getComputerChoice().toLowerCase();
+        playerSelection = this.classList.value.toLowerCase();
+        console.log(playerSelection);
         let result;
 
         if ((playerSelection === 'rock' && computerSelection === 'paper') || (playerSelection === 'paper' && computerSelection === 'scissors') || (playerSelection === 'scissors' && computerSelection === 'rock')) {
@@ -36,38 +44,64 @@
             result = 'tie';
         }
 
-        return result;
-    }
-
-    function game() {
-
-        let computerScore = 0;
-        let playerScore = 0;
-        let result;
-
-        for ( let i = 0; i < 5; i++) {
-            let pSelection = playerSelection();
-            let cSelection = getComputerChoice();
-            result = playRound(pSelection, cSelection);
-
-            if ( result === 'Player Wins') {
+        
+        
+        if ( result === 'Player Wins') {
                 playerScore++;
             } else if ( result === 'Computer Wins') {
                 computerScore++;
-            } else {
-                continue;
             }
-        }
-        if (playerScore > computerScore) {
-            result = 'Player Wins';
-        } else {
-            result = 'Computer Wins';
-        }
-        
-        return result;
-    }
+        document.getElementById('scores').textContent = `Player Score:${playerScore}   Computer Score:${computerScore}`;
 
-    console.log(game());
+
+        if (playerScore == 5 && playerScore > computerScore) {
+            document.getElementById('winner').textContent = "Player Wins";
+        } else if (computerScore == 5 && playerScore < computerScore){
+            document.getElementById('winner').textContent = "Computer Wins";
+        }
+    }
+        
+        
+
+        const buttons = document.querySelectorAll('button');
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', playRound)
+        });
+
+        
+
+        
+
+
+    // function game() {
+
+        
+
+
+        // for ( let i = 0; i < 5; i++) {
+            // let pSelection = playerSelection();
+            // let cSelection = getComputerChoice();
+            // result = playRound(pSelection, cSelection);
+
+            // if ( result === 'Player Wins') {
+                // playerScore++;
+    //         } else if ( result === 'Computer Wins') {
+    //             computerScore++;
+    //         } else {
+    //             continue;
+    //         }
+    //     }
+    //     if (playerScore > computerScore) {
+    //         result = 'Player Wins';
+    //     } else {
+    //         result = 'Computer Wins';
+    //     }
+        
+    //     return result;
+    // }
+
+    // console.log(game());
     
 
   </script>
